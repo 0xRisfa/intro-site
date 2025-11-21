@@ -3,6 +3,7 @@
 */
 
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@200;400;600;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;600&display=swap');
 
 html,
 body {
@@ -13,6 +14,163 @@ body {
   padding: 0;
   width: 100%;
 }
+
+/* Terminal theme (green on black) - scoped to sections with .terminal */
+.terminal {
+  background: #000; /* true black */
+  color: #33ff66; /* terminal green */
+  font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;
+  -webkit-font-smoothing: antialiased;
+  padding: 3rem 1.5rem;
+}
+
+.terminal h2,
+.terminal h1,
+.terminal h3,
+.terminal p,
+.terminal a {
+  color: #33ff66;
+}
+
+.terminal .prompt {
+  color: #9fffb0; /* slightly brighter for prompt text */
+  margin-bottom: 1rem;
+}
+
+.terminal .term-hero {
+  max-width: 900px;
+  margin: 0 auto 1.5rem auto;
+  text-align: left;
+}
+
+.terminal .term-hero .handle {
+  color: #33ff66;
+  font-weight: 600;
+}
+
+.terminal .container {
+  display: block;
+  max-width: 1100px;
+  margin: 1rem auto;
+  padding: 0;
+}
+
+.terminal .box {
+  background: rgba(51,255,102,0.03);
+  border: 1px solid rgba(51,255,102,0.12);
+  padding: 18px 16px;
+  margin: 10px 0;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.terminal .project-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+}
+
+.terminal .project-url {
+  color: #7afc9a;
+  font-size: 0.95rem;
+}
+
+.terminal .small {
+  color: #9fffb0;
+  opacity: 0.95;
+}
+
+.terminal a.cta {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 10px;
+  background: rgba(51,255,102,0.06);
+  color: #33ff66;
+  border: 1px solid rgba(51,255,102,0.12);
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.terminal .ascii-divider {
+  color: rgba(51,255,102,0.12);
+  margin: 12px 0;
+  font-family: 'Source Code Pro', monospace;
+}
+
+/* Make inline images dim to match terminal aesthetic */
+.terminal img {
+  filter: grayscale(100%) contrast(0.85) brightness(0.95) opacity(0.9);
+  border-radius: 4px;
+}
+
+/* Blinking cursor */
+.terminal .cursor {
+  display: inline-block;
+  width: 10px;
+  height: 18px;
+  background: #33ff66;
+  margin-left: 6px;
+  border-radius: 2px;
+  animation: blink 1s steps(2, start) infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* typing effect for handle */
+.terminal .typed {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid transparent;
+  animation: typing 2.2s steps(22, end) 1, caret 0.7s steps(1) infinite 2.2s;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 10ch; }
+}
+
+@keyframes caret {
+  50% { border-color: rgba(51,255,102,0.6); }
+}
+
+/* Scanline / CRT overlay */
+.terminal::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0) 1px,
+    rgba(0,0,0,0.02) 2px
+  );
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+/* Slight green vignette / glow */
+.terminal::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 120px rgba(0, 30, 0, 0.6);
+  border-radius: 0px;
+  z-index: 2;
+}
+
+/* Ensure content sits above overlays */
+.terminal > * { position: relative; z-index: 3; }
+
+/* Slight scanline on images */
+.terminal img { image-rendering: -webkit-optimize-contrast; }
 
 div#main {
   display: flex;

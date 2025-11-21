@@ -6,34 +6,27 @@
  */
 
 import React from "react";
-import arrowSvg from "../images/down-arrow.svg";
 import PropTypes from "prop-types";
-
-/**
- * Home background image
- *
- * Below is a sample image. Upload the image of your choice into the "images"
- * directory and import here for use. Then, set imageAltText to string that 
- * represents what you see in that image.
- *
- *
- * Need an image? Check out https://unsplash.com to download a photo you
- * freely use on your site.
- */
-import image from "../images/woman-with-tablet.jpg";
-
-const imageAltText = "Adult female in office setting leaning against a glass wall while holding a platinum Microsoft Surface Pro 7 in tablet mode preparing to write with Microsoft Surface Pen";
 
 const Home = ({ name, title }) => {
   return (
-    <section id="home" className="min-height">
-      <img className="background" src={image} alt="" />
-      <div style={{ position: "absolute", top: "5rem", left: "2rem", width: "17rem" }}>
-        <h1>{name}</h1>
-        <h2>{title}</h2>
-      </div>
-      <div style={{ position: "absolute", bottom: "3rem", left: "50%" }}>
-        <img src={arrowSvg} style={{ height: "3rem", width: "3rem" }} alt={imageAltText} />
+    <section id="home" className="min-height terminal" style={{ paddingTop: "6rem" }}>
+      <div style={{ maxWidth: 900, margin: "3rem auto 1rem auto", textAlign: "center" }}>
+        <img
+          src="https://farisosmic.splet.arnes.si/files/2025/04/97c2818d-1ccd-46d2-9ee4-2b2d4375160d-e1745253047888.png"
+          alt="logo"
+          style={{ width: 140, height: 140, objectFit: "cover", display: "block", margin: "0 auto 1rem auto" }}
+        />
+        <p className="prompt" style={{ marginBottom: "0.25rem" }}>
+          <span className="prompt-prefix">faris@home:~$</span>
+          <span className="handle typed"> whoami</span>
+          <span className="cursor" aria-hidden>&nbsp;</span>
+        </p>
+        <h1 style={{ fontFamily: "'Source Code Pro', monospace", fontSize: "2.2rem" }}>{name}</h1>
+        <h2 style={{ fontWeight: 300, marginTop: "0.25rem" }}>{title}</h2>
+        <p className="small" style={{ marginTop: "0.75rem", maxWidth: 800, marginLeft: "auto", marginRight: "auto" }}>
+          I turn code into working ideas — games, web apps, and systems that solve problems.
+        </p>
       </div>
     </section>
   );
