@@ -28,7 +28,7 @@ const siteProps = {
   title: "Computer Science Student",
   email: "farisosmic@hotmail.com",
   gitHub: "0xRisfa",
-  instagram: "",
+  instagram: "https://www.instagram.com/farinat0r_/",
   linkedIn: "",
   medium: "",
   twitter: "",

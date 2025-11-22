@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 /**
  * Project list
@@ -94,9 +94,7 @@ const Portfolio = () => {
         <p className="prompt">
           <span className="prompt-prefix">faris@portfolio:~$</span>
           <span className="handle typed"> cat intro.md</span>
-          <span className="cursor" aria-hidden>
-            &nbsp;
-          </span>
+          <span className="cursor" aria-hidden></span>
         </p>
         <h2>Hey! I’m Faris, a computer science student who loves turning code into cool, working ideas — from games to web apps and everything in between.</h2>
       </div>
@@ -160,4 +158,46 @@ const Portfolio = () => {
   );
 };
 
-export default Portfolio;
+// drive typed width after mount
+const useTypedResize = () => {
+  useEffect(() => {
+    const els = Array.from(document.querySelectorAll("#portfolio .typed"));
+    if (!els.length) return;
+
+    const animate = (el) => {
+      const text = el.textContent || "";
+      const len = Math.max(1, text.length);
+      const duration = Math.max(0.6, len * 0.06);
+      el.style.width = "0ch";
+      // set transition and then trigger width change
+      el.style.transition = `width ${duration}s steps(${len}, end)`;
+      setTimeout(() => {
+        el.style.width = `${len}ch`;
+      }, 40);
+    };
+
+    const io = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animate(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.35 });
+
+    els.forEach((el) => io.observe(el));
+
+    return () => io.disconnect();
+  }, []);
+};
+
+// apply the typed resize when Portfolio mounts
+const _orig = Portfolio;
+const PortfolioWithTyped = (props) => {
+  useTypedResize();
+  return _orig(props);
+};
+
+export default PortfolioWithTyped;
+
+// module exports the wrapped component with typing effect

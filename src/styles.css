@@ -13,6 +13,7 @@ body {
   overflow-x: hidden;
   padding: 0;
   width: 100%;
+  transition: smooth 0.3s ease-in-out;
 }
 
 /* Terminal theme (green on black) - scoped to sections with .terminal */
@@ -22,6 +23,7 @@ body {
   font-family: 'Source Code Pro', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;
   -webkit-font-smoothing: antialiased;
   padding: 3rem 1.5rem;
+  position: relative;
 }
 
 .terminal h2,
@@ -104,16 +106,90 @@ body {
   border-radius: 4px;
 }
 
-/* Blinking cursor */
+/* Responsive: center and scale for small screens */
+@media (max-width: 768px) {
+  .terminal {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .term-hero {
+    text-align: center;
+    padding: 0 0.5rem;
+  }
+
+  .term-hero img {
+    margin: 0 auto 0.6rem auto;
+    width: 96px;
+    height: 96px;
+    display: block;
+  }
+
+  .terminal .prompt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 0.45rem;
+  }
+
+  .terminal .prompt-prefix,
+  .terminal .typed,
+  .terminal .cursor {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .terminal .typed { animation-duration: 1.0s; }
+
+  .container {
+    max-width: 100%;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+  }
+
+  .container .box {
+    padding: 12px;
+    margin: 8px 0;
+  }
+
+  .container .box img {
+    width: 100%;
+    height: auto;
+    max-width: 320px;
+  }
+
+  .terminal .project-title { font-size: 1rem; }
+
+  .terminal h1 { font-size: 1.8rem; }
+  .terminal h2 { font-size: 1rem; }
+
+  /* Ensure header fixed bar doesn't hide content */
+  #main { padding-top: 3.5rem; }
+}
+
+/* Blinking cursor and typed text - width and transition controlled by JS to avoid layout shifts */
+.terminal .prompt,
+.terminal .prompt-prefix,
+.terminal .typed,
 .terminal .cursor {
   display: inline-block;
-  width: 10px;
-  height: 18px;
+  vertical-align: middle;
+  line-height: 1.2;
+}
+
+.terminal .typed {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0ch; /* JS will set width and transition dynamically */
+}
+
+/* thin blinking cursor placed after the typed text; uses margin so it doesn't shift prefix */
+.terminal .cursor {
+  width: 2px;
+  height: 1.2em;
   background: #33ff66;
   margin-left: 6px;
-  border-radius: 2px;
   animation: blink 1s steps(2, start) infinite;
-  vertical-align: middle;
 }
 
 @keyframes blink {
@@ -121,22 +197,17 @@ body {
   50%, 100% { opacity: 0; }
 }
 
-/* typing effect for handle */
-.terminal .typed {
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 2px solid transparent;
-  animation: typing 2.2s steps(22, end) 1, caret 0.7s steps(1) infinite 2.2s;
-}
+/* Smooth scrolling for anchor navigation */
+html { scroll-behavior: smooth; }
 
-@keyframes typing {
-  from { width: 0; }
-  to { width: 10ch; }
-}
-
-@keyframes caret {
-  50% { border-color: rgba(51,255,102,0.6); }
+/* ASCII donut spinner */
+.donut {
+  font-family: 'Source Code Pro', monospace;
+  color: #33ff66;
+  text-align: center;
+  margin-top: 0.75rem;
+  font-size: 1.05rem;
+  line-height: 1;
 }
 
 /* Scanline / CRT overlay */
@@ -181,6 +252,15 @@ div#main {
 section {
   position: relative;
   width: 100vw;
+}
+
+/* Make anchors land below the fixed header by default */
+section, .terminal, #home, #about, #portfolio, #footer {
+  scroll-margin-top: 80px;
+}
+
+@media (max-width: 768px) {
+  section, .terminal, #home, #about, #portfolio, #footer { scroll-margin-top: 64px; }
 }
 
 section.min-height {
