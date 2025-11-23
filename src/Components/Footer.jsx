@@ -8,6 +8,7 @@
  * If a social value has an empty string it will not be displayed.
  */
 import React from "react";
+import TerminalOutput from "./TerminalOutput";
 import PropTypes from "prop-types";
 
 import devDotToIcon from "../images/socials/devdotto.svg";
@@ -40,38 +41,20 @@ const Footer = (props) => {
     youTube,
   } = props;
 
+  const lines = [
+    "Contact",
+    email ? `- Email: ${email}` : "",
+    gitHub ? `- GitHub: https://github.com/${gitHub}` : "",
+    "",
+    `Created by ${name}`,
+  ];
+
   return (
-    <div
-      id="footer"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "1.25rem",
-        padding: "3rem 0 2rem",
-        backgroundColor: "#000",
-        width: "100vw",
-        borderTop: "1px solid rgba(51,255,102,0.06)",
-      }}
-    >
-      <div style={{ textAlign: "center" }}>
-        {email && (
-          <div style={{ marginBottom: 8 }}>
-            <a href={`mailto:${email}`} style={{ color: "#33ff66", textDecoration: "none" }}>{email}</a>
-          </div>
-        )}
-        {gitHub && (
-          <div>
-            <a href={`https://github.com/${gitHub}`} target="_blank" rel="noopener noreferrer" style={{ color: "#33ff66", textDecoration: "none" }}>
-              GitHub: {gitHub}
-            </a>
-          </div>
-        )}
+    <section id="footer" style={{ backgroundColor: "#000" }}>
+      <div style={{ maxWidth: 900, margin: "2rem auto", padding: "1rem" }}>
+        <TerminalOutput sectionId="footer" lines={lines} promptLabel="footer" />
       </div>
-      <p className="small" style={{ marginTop: 0, color: "#33ff66" }}>
-        Created by {name}
-      </p>
-    </div>
+    </section>
   );
 };
 

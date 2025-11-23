@@ -6,6 +6,7 @@
  */
 
 import React, { useEffect, useRef, useState } from "react";
+import TerminalLine from "./TerminalLine";
 import PropTypes from "prop-types";
 
 const Donut = () => {
@@ -93,11 +94,9 @@ const Home = ({ name, title }) => {
           alt="logo"
           style={{ width: 140, height: 140, objectFit: "cover", display: "block", margin: "0 auto 1rem auto" }}
         />
-        <p className="prompt" style={{ marginBottom: "0.25rem" }}>
-          <span className="prompt-prefix">faris@home:~$</span>
-          <span className="handle typed" ref={typedRef}> whoami</span>
-          <span className="cursor" aria-hidden></span>
-        </p>
+        <div style={{ marginBottom: "0.25rem" }}>
+          <TerminalLine sectionId={"home"} promptPrefix={`faris@home:~$ `} initial={"whoami"} auto />
+        </div>
         <h1 style={{ fontFamily: "'Source Code Pro', monospace", fontSize: "2.2rem" }}>{name}</h1>
         <h2 style={{ fontWeight: 300, marginTop: "0.25rem" }}>{title}</h2>
         <p className="small" style={{ marginTop: "0.75rem", maxWidth: 800, marginLeft: "auto", marginRight: "auto" }}>

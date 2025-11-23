@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import TerminalOutput from "./TerminalOutput";
 
 /**
  * Project list
@@ -83,6 +84,26 @@ const work = [
 ];
 
 const Portfolio = () => {
+  const lines = [
+    "Portfolio",
+    "Hey! I'm Faris, a computer science student who loves turning code into cool, working ideas — from games to web apps and everything in between.",
+    "",
+    "Featured Work:",
+    ...projectList.map((p) => `- ${p.title} — ${p.description}`),
+    "",
+    "What I Do Best:",
+    ...skills.map((s) => `- ${s.title}: ${s.description}`),
+    "",
+    "Education:",
+    ...education.map((e) => `- ${e.school} — ${e.period}`),
+    "",
+    "Work Experience:",
+    ...work.map((w) => `- ${w.company} — ${w.period}`),
+    "",
+    "Contact:",
+    "- Email: farisosmic@hotmail.com",
+  ];
+
   return (
     <section className="padding terminal" id="portfolio">
       <div className="term-hero">
@@ -91,67 +112,12 @@ const Portfolio = () => {
           alt="logo"
           style={{ width: 120, height: 120, objectFit: "cover", display: "block", marginBottom: "1rem" }}
         />
-        <p className="prompt">
-          <span className="prompt-prefix">faris@portfolio:~$</span>
-          <span className="handle typed"> cat intro.md</span>
-          <span className="cursor" aria-hidden></span>
-        </p>
-        <h2>Hey! I’m Faris, a computer science student who loves turning code into cool, working ideas — from games to web apps and everything in between.</h2>
+        <h2 style={{ marginTop: 0 }}>Featured Work</h2>
       </div>
 
       <div className="container">
-        <h3 style={{ marginTop: 0 }}>Featured Work</h3>
-        {projectList.map((project) => (
-          <div className="box" key={project.title}>
-            <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-              <img src={project.image} alt={project.title} style={{ width: 180, height: 90, objectFit: "cover" }} />
-              <div>
-                <a className="project-url" href={project.url} target="_blank" rel="noopener noreferrer">
-                  <div className="project-title">{project.title}</div>
-                </a>
-                <p className="small">{project.description}</p>
-                <a className="cta" href={project.url} target="_blank" rel="noopener noreferrer">View Project</a>
-              </div>
-            </div>
-          </div>
-        ))}
-
-        <div className="box" style={{ marginTop: 18 }}>
-          <h3>What I Do Best</h3>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12 }}>
-            {skills.map((s) => (
-              <div key={s.title} style={{ padding: 8, borderRadius: 6, background: "rgba(51,255,102,0.02)" }}>
-                <strong>{s.icon} {s.title}</strong>
-                <p className="small">{s.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="box">
-          <h3>Education</h3>
-          {education.map((e) => (
-            <div key={e.school} style={{ marginBottom: 8 }}>
-              <div style={{ fontWeight: 600 }}>{e.school} <span style={{ fontWeight: 300, color: "#9fffb0" }}>— {e.period}</span></div>
-              <p className="small">{e.details} <a className="project-url" href={e.link} target="_blank" rel="noreferrer">(link)</a></p>
-            </div>
-          ))}
-        </div>
-
-        <div className="box">
-          <h3>Work Experience</h3>
-          {work.map((w) => (
-            <div key={w.company} style={{ marginBottom: 8 }}>
-              <div style={{ fontWeight: 600 }}>{w.company} <span style={{ fontWeight: 300, color: "#9fffb0" }}>— {w.period}</span></div>
-              <p className="small">{w.details}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="box">
-          <h3>Contact</h3>
-          <p className="small">Email: <a className="project-url" href="mailto:farisosmic@hotmail.com">farisosmic@hotmail.com</a></p>
-          <p className="small">Feel free to contact me with any inquiries or questions.</p>
+        <div style={{ maxWidth: 900, margin: "1rem auto" }}>
+          <TerminalOutput sectionId="portfolio" lines={lines} promptLabel="portfolio" />
         </div>
       </div>
     </section>
