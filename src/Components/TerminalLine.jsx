@@ -11,7 +11,7 @@ const TerminalLine = forwardRef(({ sectionId, promptPrefix = "faris@home:~$ ", i
 
   useEffect(() => {
     mountedRef.current = true;
-    if (registerInput) registerInput(sectionId, { runCommands });
+    if (registerInput) registerInput(sectionId, { runCommands, suppress: false });
     return () => {
       mountedRef.current = false;
       if (unregisterInput) unregisterInput(sectionId);

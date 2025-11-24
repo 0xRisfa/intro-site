@@ -34,7 +34,7 @@ const Header = () => {
       <a href="#home" onClick={(e) => smoothTo(e, "home")} style={{ color: "#33ff66", textDecoration: "none" }}>Home</a>
       <a href="#about" onClick={(e) => smoothTo(e, "about")} style={{ color: "#33ff66", textDecoration: "none" }}>About</a>
       <a href="#portfolio" onClick={(e) => smoothTo(e, "portfolio")} style={{ color: "#33ff66", textDecoration: "none" }}>Portfolio</a>
-      <a href="#footer" onClick={(e) => smoothTo(e, "footer")} style={{ color: "#33ff66", textDecoration: "none" }}>Contact</a>
+      <a href="#computer" onClick={(e) => smoothTo(e, "computer")} style={{ color: "#33ff66", textDecoration: "none" }}>Computer</a>
     </div>
   );
 };

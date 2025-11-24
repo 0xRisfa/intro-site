@@ -11,6 +11,7 @@ import Footer from "./Components/Footer";
 import Header from "./Components/Header";
 import Home from "./Components/Home";
 import Portfolio from "./Components/Portfolio";
+import Computer from "./Components/Computer";
 import TerminalProvider, { useTerminal } from "./Components/TerminalProvider";
 
 import "./styles.css";
@@ -45,12 +46,13 @@ const App = () => {
     return (
       <div id="main">
         <Header />
-        {mounted === "home" && <Home name={siteProps.name} title={siteProps.title} />}
-        {mounted === "about" && <About />}
-        {mounted === "portfolio" && <Portfolio />}
-        {mounted === "footer" && (
-          <Footer {...siteProps} primaryColor={primaryColor} secondaryColor={secondaryColor} />
-        )}
+        <div id="content" style={{ flex: 1, paddingTop: "4rem" }}>
+          {mounted === "home" && <Home name={siteProps.name} title={siteProps.title} />}
+          {mounted === "about" && <About />}
+          {mounted === "portfolio" && <Portfolio />}
+          {mounted === "computer" && <Computer />}
+        </div>
+        <Footer {...siteProps} primaryColor={primaryColor} secondaryColor={secondaryColor} />
       </div>
     );
   };

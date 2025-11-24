@@ -5,7 +5,7 @@
  * choice, name and title that describes your career focus.
  */
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TerminalLine from "./TerminalLine";
 import PropTypes from "prop-types";
 
@@ -67,45 +67,75 @@ const Donut = () => {
   return <pre className="donut" aria-hidden style={{ whiteSpace: 'pre', margin: '0 auto' }}>{frame}</pre>;
 };
 
+import { useTerminal } from "./TerminalProvider";
+
 const Home = ({ name, title }) => {
-  const typedRef = useRef(null);
+  const [showContent, setShowContent] = useState(true);
+  const { registerInput, unregisterInput } = useTerminal() || {};
 
   useEffect(() => {
-    const el = typedRef.current;
-    if (!el) return;
-    const text = el.textContent || "";
-    const len = Math.max(1, text.length);
-    const duration = Math.max(0.6, len * 0.06); // seconds
-    // prepare for animation
-    el.style.width = "0ch";
-    el.style.transition = `width ${duration}s steps(${len}, end)`;
-    // small delay to ensure transition applies
-    const id = setTimeout(() => {
-      el.style.width = `${len}ch`;
-    }, 40);
-    return () => clearTimeout(id);
-  }, []);
+    if (registerInput && typeof registerInput === "function") {
+      registerInput("home", {
+        clearAll: () => {
+          setShowContent(false);
+        },
+      });
+    }
+    return () => {
+      if (unregisterInput && typeof unregisterInput === "function") unregisterInput("home");
+    };
+  }, [registerInput, unregisterInput]);
 
   return (
-    <section id="home" className="min-height terminal" style={{ paddingTop: "6rem" }}>
-      <div className="term-hero" style={{ maxWidth: 900, margin: "3rem auto 1rem auto", textAlign: "center" }}>
-        <img
-          src="https://farisosmic.splet.arnes.si/files/2025/04/97c2818d-1ccd-46d2-9ee4-2b2d4375160d-e1745253047888.png"
-          alt="logo"
-          style={{ width: 140, height: 140, objectFit: "cover", display: "block", margin: "0 auto 1rem auto" }}
-        />
-        <div style={{ marginBottom: "0.25rem" }}>
-          <TerminalLine sectionId={"home"} promptPrefix={`faris@home:~$ `} initial={"whoami"} auto />
+    <section
+      id="home"
+      className={showContent ? "terminal" : "padding terminal"}
+      style={
+        showContent
+          ? { padding: "2rem 0", display: "flex", alignItems: "center", justifyContent: "center" }
+          : {}
+      }
+    >
+      {showContent ? (
+        <div
+          className={`term-hero`}
+          style={{ margin: "0 auto", textAlign: "center", padding: "1rem" }}
+        >
+          <img
+            src="https://farisosmic.splet.arnes.si/files/2025/04/97c2818d-1ccd-46d2-9ee4-2b2d4375160d-e1745253047888.png"
+            alt="logo"
+            style={{
+              width: 140,
+              height: 140,
+              objectFit: "cover",
+              display: "block",
+              margin: "0 auto 1rem auto",
+            }}
+          />
+
+          <div className="home-terminal-line" style={{ marginTop: 8 }}>
+            <TerminalLine sectionId={"home"} promptPrefix={`faris@home:~$ `} initial={""} />
+          </div>
+
+          <div className="home-main-content">
+            <h1 style={{ fontFamily: "'Source Code Pro', monospace", fontSize: "2.2rem" }}>
+              {name}
+            </h1>
+            <h2 style={{ fontWeight: 300, marginTop: "0.25rem" }}>{title}</h2>
+            <p className="small term-wrap">
+              I turn code into working ideas — games, web apps, and systems that solve problems.
+            </p>
+            <div style={{ marginTop: "1.25rem", fontSize: "0.7rem" }}>
+              <Donut />
+            </div>
+          </div>
         </div>
-        <h1 style={{ fontFamily: "'Source Code Pro', monospace", fontSize: "2.2rem" }}>{name}</h1>
-        <h2 style={{ fontWeight: 300, marginTop: "0.25rem" }}>{title}</h2>
-        <p className="small" style={{ marginTop: "0.75rem", maxWidth: 800, marginLeft: "auto", marginRight: "auto" }}>
-          I turn code into working ideas — games, web apps, and systems that solve problems.
-        </p>
-        <div style={{ marginTop: "10rem" }}>
-          <Donut />
+      ) : null}
+      {!showContent && (
+        <div style={{ maxWidth: 900, margin: "2rem auto", padding: "1rem" }}>
+          <TerminalLine sectionId={"home"} promptPrefix={`faris@home:~$ `} initial={""} />
         </div>
-      </div>
+      )}
     </section>
   );
 };

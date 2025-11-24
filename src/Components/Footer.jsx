@@ -8,17 +8,7 @@
  * If a social value has an empty string it will not be displayed.
  */
 import React from "react";
-import TerminalOutput from "./TerminalOutput";
 import PropTypes from "prop-types";
-
-import devDotToIcon from "../images/socials/devdotto.svg";
-import envelopeIcon from "../images/socials/envelope.svg";
-import gitHubIcon from "../images/socials/github.svg";
-import instagramIcon from "../images/socials/instagram.svg";
-import linkedInIcon from "../images/socials/linkedin.svg";
-import mediumIcon from "../images/socials/medium.svg";
-import twitterIcon from "../images/socials/twitter.svg";
-import youTubeIcon from "../images/socials/youtube.svg";
 
 /**
  * 💡 Learning resources
@@ -41,20 +31,32 @@ const Footer = (props) => {
     youTube,
   } = props;
 
-  const lines = [
-    "Contact",
-    email ? `- Email: ${email}` : "",
-    gitHub ? `- GitHub: https://github.com/${gitHub}` : "",
-    "",
-    `Created by ${name}`,
-  ];
-
   return (
-    <section id="footer" style={{ backgroundColor: "#000" }}>
-      <div style={{ maxWidth: 900, margin: "2rem auto", padding: "1rem" }}>
-        <TerminalOutput sectionId="footer" lines={lines} promptLabel="footer" />
+    <footer
+      id="footer"
+      style={{
+        backgroundColor: "#000",
+        color: "#33ff66",
+        padding: "1.5rem 1rem",
+        borderTop: "1px solid rgba(51,255,102,0.06)",
+      }}
+    >
+      <div style={{ maxWidth: 900, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem" }}>
+        <div style={{ color: "#9fffb0" }}>
+          {email && (
+            <div style={{ marginBottom: 6 }}>
+              <a href={`mailto:${email}`} style={{ color: "#33ff66", textDecoration: "none" }}>{email}</a>
+            </div>
+          )}
+          {gitHub && (
+            <div>
+              <a href={`https://github.com/${gitHub}`} target="_blank" rel="noopener noreferrer" style={{ color: "#33ff66", textDecoration: "none" }}>GitHub: {gitHub}</a>
+            </div>
+          )}
+        </div>
+        <div style={{ color: "#33ff66", fontSize: "0.95rem" }}>Created by {name}</div>
       </div>
-    </section>
+    </footer>
   );
 };
 

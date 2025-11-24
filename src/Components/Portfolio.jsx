@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TerminalOutput from "./TerminalOutput";
+import { useTerminal } from "./TerminalProvider";
 
 /**
  * Project list
@@ -100,25 +101,37 @@ const Portfolio = () => {
     "Work Experience:",
     ...work.map((w) => `- ${w.company} — ${w.period}`),
     "",
-    "Contact:",
-    "- Email: farisosmic@hotmail.com",
   ];
+
+  const { registerInput, unregisterInput } = useTerminal() || {};
+  const [showHeader, setShowHeader] = useState(true);
+
+  useEffect(() => {
+    setShowHeader(true);
+    if (registerInput && typeof registerInput === "function") {
+      // clearAll will hide only the static header (image/title), not the terminal prompt
+      registerInput("portfolio", { clearAll: () => setShowHeader(false) });
+    }
+    return () => {
+      if (unregisterInput && typeof unregisterInput === "function") unregisterInput("portfolio");
+    };
+  }, [registerInput, unregisterInput]);
 
   return (
     <section className="padding terminal" id="portfolio">
-      <div className="term-hero">
-        <img
-          src="https://farisosmic.splet.arnes.si/files/2025/04/97c2818d-1ccd-46d2-9ee4-2b2d4375160d-e1745253047888.png"
-          alt="logo"
-          style={{ width: 120, height: 120, objectFit: "cover", display: "block", marginBottom: "1rem" }}
-        />
-        <h2 style={{ marginTop: 0 }}>Featured Work</h2>
-      </div>
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: "1rem" }}>
+        {showHeader && (
+          <div className="term-hero">
+            <img
+              src="https://farisosmic.splet.arnes.si/files/2025/04/97c2818d-1ccd-46d2-9ee4-2b2d4375160d-e1745253047888.png"
+              alt="logo"
+              style={{ width: 120, height: 120, objectFit: "cover", display: "block", marginBottom: "1rem" }}
+            />
+            <h2 style={{ marginTop: 0 }}>Featured Work</h2>
+          </div>
+        )}
 
-      <div className="container">
-        <div style={{ maxWidth: 900, margin: "1rem auto" }}>
-          <TerminalOutput sectionId="portfolio" lines={lines} promptLabel="portfolio" />
-        </div>
+        <TerminalOutput sectionId="portfolio" lines={lines} promptLabel="portfolio" />
       </div>
     </section>
   );

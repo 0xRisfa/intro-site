@@ -17,7 +17,6 @@ const lines = [
   "- Java",
   "- SQL & PL/SQL",
   "- System Architecture",
-  "- Problem Solving",
   "",
   "I like to combine creative problem solving with practical engineering to build useful projects and learn new technologies along the way.",
 ];
